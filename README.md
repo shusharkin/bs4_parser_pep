@@ -54,7 +54,7 @@ python main.py latest-versions -o pretty
 
 + Парсинг документации актуальной версии Python (скачивание zip-архива в папку downloads):
 ```
-python main.py pep -o file
+python main.py download
 ```
 
 + Парсинг данных о всех документах PEP (вывод в csv-файл в папку results):
