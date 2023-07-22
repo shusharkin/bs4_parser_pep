@@ -9,7 +9,7 @@ Python и библиотеки BeautifulSoup4, Prettytable
 
 ### Как запустить проект:
 
-Клонировать репозиторий и перейти в него в командной строке:
++ Клонировать репозиторий и перейти в него в командной строке:
 
 ```
 git clone git@github.com:shusharkin/bs4_parser_pep.git
@@ -19,7 +19,7 @@ git clone git@github.com:shusharkin/bs4_parser_pep.git
 cd bs4_parser_pep
 ```
 
-Cоздать и активировать виртуальное окружение:
++ Cоздать и активировать виртуальное окружение:
 
 ```
 python3 -m venv мenv
@@ -29,7 +29,7 @@ python3 -m venv мenv
 source venv/Scripts/activate
 ```
 
-Установить зависимости:
++ Установить зависимости:
 
 ```
 pip install -r requirements.txt
@@ -37,22 +37,32 @@ pip install -r requirements.txt
 
 ## Примеры команд
 
-Справка
++ Вывод справки в командную строку
 ```
 python main.py pep -h
 ```
 
-Нововведения в Python:
++ Нововведения в Python (вывод в командную сроку):
 ```
 python main.py whats-new
 ```
 
-Последнии версии Python:
++ Последнии версии Python (вывод в командную сроку в виде таблицы):
 ```
 python main.py latest-versions -o pretty 
 ```
 
-Спарсить данные обо всех документах PEP в csv-файл:
++ Парсинг документации актуальной версии Python (скачивание zip-архива в папку downloads):
 ```
 python main.py pep -o file
 ```
+
++ Парсинг данных о всех документах PEP (вывод в csv-файл в папку results):
+```
+python main.py pep -o file
+```
+
+
+## Автор:
+
+[Шушаркин Герман](https://github.com/shusharkin)

@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 from urllib.parse import urljoin
 
 import requests_cache
@@ -108,16 +109,14 @@ def pep(session):
     tbody_tag = find_tag(section_tag, 'tbody')
     tr_tags = tbody_tag.find_all('tr')
 
-    status_sum = {}
-    total_peps = 0
+    status_sum = defaultdict(int)
 
     results = [('Статус', 'Количество')]
 
     for n in tqdm(tr_tags):
-        total_peps += 1
         data = list(find_tag(n, 'abbr').text)
         preview_status = data[1:][0] if len(data) > 1 else ''
-        url = urljoin(PEP_URL, find_tag(n, 'a', attrs={
+        url = urljoin(PEP_URL + "/", find_tag(n, 'a', attrs={
             'class': 'pep reference internal'})['href'])
         response = get_response(session, url)
         soup = BeautifulSoup(response.text, features='lxml')
@@ -125,10 +124,7 @@ def pep(session):
                               attrs={'class': 'rfc2822 field-list simple'})
         status_pep_page = table_info.find(
             string='Status').parent.find_next_sibling('dd').string
-        if status_pep_page in status_sum:
-            status_sum[status_pep_page] += 1
-        if status_pep_page not in status_sum:
-            status_sum[status_pep_page] = 1
+        status_sum[status_pep_page] += 1
         if status_pep_page not in EXPECTED_STATUS[preview_status]:
             error_message = (f'Несовпадающие статусы:\n'
                              f'{url}\n'
@@ -138,6 +134,7 @@ def pep(session):
             logging.warning(error_message)
     for status in status_sum:
         results.append((status, status_sum[status]))
+    total_peps = sum(status_sum.values())
     results.append(('Total', total_peps))
     return results
 
